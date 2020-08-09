@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="post">
+    <h2>Bloggers</h2><br>
+    {% for x in bloggers %}
+    {% if x == user %}
+    <p class ="comment1"><a href ="#"><img id="i1" src={{x.profile.prof_pic.url}} style="float:left;width:50px;height:50px;border: 1px solid #ddd; border-radius: 50px; "></a> <a href ="#" style="color:black; margin-left:20px;"><em><strong>{{x.username}}</strong></em></a><small style="float:right;color:black;"><em>Posts:{{x.profile.pub_count}}</em></style></small></p>
+    {% else %}
+    <p class ="comment1"><a href ="{% url 'blogger_detail' pk=x.pk %}"><img id="i1" src={{x.profile.prof_pic.url}} style="float:left;width:50px;height:50px;border: 1px solid #ddd; border-radius: 50px; "></a> <a href ="{% url 'blogger_detail' pk=x.pk %}" style="color:black; margin-left:20px;"><em><strong>{{x.username}}</strong></em></a><small style="float:right;color:black;"><em>Posts:{{x.profile.pub_count}}</em></style></small></p>
+    {% endif %}
+    <br>
+    <hr>
+    {% endfor %}
+</div>
+
+{% endblock %}

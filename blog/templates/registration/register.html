@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+   <br>
+   <br>
+        <div class="container">
+            <div class="col-sm-6">
+                <div class="card rounded-lg shadow mb-4 bg-white">
+                    {% if user.is_authenticated %} 
+                    <div class="card-header"><h2>Update Profile</h2></div>
+                    {% else %}
+                    <div class="card-header"><h2>Sign Up Details</h2></div>
+                    {% endif %}
+                    <br>
+                    <div class="card-body">
+                            <form method="POST" action="{% url 'register' %}" novalidate enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% if form.non_field_errors %}
+                                        {% for error in form.non_field_errors %}
+                                        <small style="color: red">{{error}}</small>
+                                        {% endfor %}
+                                    {% endif %}    
+                                    {% for field in form %}
+                                    <p>
+                                        {{field.label_tag}}<br>
+                                        <!-- {% if field.label_tag == "profile_pic"  and user.is_authenticated %}
+                                        {{user.profile.prof_pic.name}}
+                                        {% else %} -->
+                                        {{field}}
+                                        <!-- {% endif %} -->
+                                        {% if user.is_authenticated %}
+                                            {% if "username" not in field.label_tag %}
+                                                {% if "profile_pic" not in field.label_tag %}
+                                                    {% for error in field.errors %}
+                                                        <small style="color:red" >{{error}}</small>
+                                                    {% endfor %}
+                                                {% endif %}                    
+                                            {% endif %}
+                                        {% else %}
+                                            {% for error in field.errors %}
+                                                <small style="color:red" >{{error}}</small>
+                                            {% endfor %}
+                                        {% endif %}  
+                                    </p>
+                                    {% endfor %}
+        {% if user.is_authenticated %}                            
+        <input type="submit" value="Update" class="btn btn-primary"/>
+        {% else %}
+        <input type="submit" value="Sign Up" class="btn btn-primary"/>
+        {% endif %}
+        <!--<input type="hidden" name="next" value="{{ next }}" />-->
+    </form>
+</div> 
+</div>    
+</div>
+</div>          
+{% endblock %}

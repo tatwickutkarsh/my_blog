@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="post">
+    <a target="_blank" href={{user.profile.prof_pic.url}}>
+    <img id="i1" src={{user.profile.prof_pic.url}} style="float:right;width:25%;height:60%;border: 1px solid #ddd; border-radius: 4px; padding: 5px; ">
+    </a>
+    <h2>My Profile&nbsp&nbsp&nbsp<a href='{% url "register"%}'><span class='glyphicon glyphicon-pencil' id="pen"></span></a></h2>
+    <hr width="60%" align="left">
+    <h3>Username:   {{ user.username }}</h3>
+    <h3>First Name: {{ user.first_name }}</h3>
+    <h3>Last Name:  {{ user.last_name}}</h3>
+    <h3>Email:      {{ user.email}}</h3>
+    <h3>No. of Posts Published:   {{user.profile.pub_count}}</h3>
+    <h3>Posts Published: </h3>
+    <div>
+        {% for post in user.post_set.all %}
+        {% if post.published_date != None %}
+        <a class="comment1" href="{% url 'post_detail' pk=post.pk %}"><em>{{post.title}}</em></a>
+        <br>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <h3>No. of Posts Pending:   {{user.profile.pend_count}}</h3>
+    <h3>Posts Pending: </h3>
+    <div>
+        {% for post in user.post_set.all %}
+        {% if post.published_date == None %}
+        <a class="comment1" href="{% url 'post_detail' pk=post.pk %}"><em>{{post.title}}<em></a>
+        <br>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

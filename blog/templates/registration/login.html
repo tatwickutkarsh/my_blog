@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+        <br>
+        <br>
+       
+        <div class="container">
+            <div class="col-sm-6">
+                <div class="card rounded-lg shadow mb-4 bg-white">
+                    <div class="card-header"><h2>Login Details</h2></div>
+                    <br>
+                    <div class="card-body">
+                            <form method="post" action="{% url 'login' %}"novalidate>
+                                    {% csrf_token %}
+                                    {% if form.non_field_errors %}
+                                        {% for error in form.non_field_errors %}
+                                        <small style="color: red">{{error}}</small>
+                                        {% endfor %}
+                                    {% endif %}    
+                                    {% for field in form %}
+                                    <p>
+                                        {{field.label_tag}}<br>
+                                        {{field}}
+                                        {% for error in field.errors %}
+                                        <small style="color:red">{{error}}</small>
+                                        {% endfor %}
+                                    </p>
+                                    {% endfor %}
+        <input type="submit" value="Login" class="btn btn-primary"/>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <br>
+        <br>
+        <a href="{% url 'register' %}">Don't have an account? Signup Now!!</a>
+    </form>
+</div> 
+</div>    
+</div> 
+</div>         
+{% endblock %}
